@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "vaibhav6060/academy"
+        IMAGE_TAG  = "${BUILD_NUMBER}"
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'main',
+                url: 'https://github.com/Vaibhav6060/academy-project.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                docker build -t $IMAGE_NAME:$IMAGE_TAG .
+                docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest
+                '''
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS'
+                    )
+                ]) {
+                    sh '''
+                    echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                    docker push $IMAGE_NAME:$IMAGE_TAG
+                    docker push $IMAGE_NAME:latest
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy To EKS') {
+            steps {
+                // Using double quotes here so Jenkins replaces the variables accurately
+                sh """
+                kubectl set image deployment/laravel-app \\
+                laravel=${IMAGE_NAME}:${IMAGE_TAG} \\
+                -n academy
+
+                kubectl rollout status deployment/laravel-app -n academy
+                """
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment Successful'
+        }
+        failure {
+            echo 'Deployment Failed'
+        }
+    }
+}

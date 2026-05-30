@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laravel-app
+  namespace: academy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: laravel-app
+  template:
+    metadata:
+      labels:
+        app: laravel-app
+    spec:
+      imagePullSecrets:             # <-- Add this back
+      - name: dockerhub-secret      # <-- Add this back
+      containers:
+      - name: laravel
+        image: vaibhav6060/academy:latest
+        ports:
+        - containerPort: 9000
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: academy-db-secret
+              key: DB_HOST
+        - name: DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: academy-db-secret
+              key: DB_DATABASE
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: academy-db-secret
+              key: DB_USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: academy-db-secret
+              key: DB_PASSWORD
