@@ -6,43 +6,33 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>{{ $meta_title ?? 'Gagan Bharari Academy' }}</title>
 
-  <!-- SEO Meta Tags -->
   <meta name="description" content="{{ $meta_description ?? 'Best coaching academy in Pune.' }}">
   <meta name="keywords" content="{{ $meta_keywords ?? 'coaching, academy, pune, rajgurunagar' }}">
   <meta name="robots" content="index, follow">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="canonical" href="{{ $canonical_url ?? url()->current() }}">
 
-
-  <!-- Open Graph Meta -->
   <meta property="og:title" content="{{ $meta_title ?? 'Gagan Bharari Academy' }}">
   <meta property="og:description" content="{{ $meta_description ?? 'Best coaching academy in Pune.' }}">
   <meta property="og:url" content="{{ $canonical_url ?? url()->current() }}">
   <meta property="og:type" content="website">
   <meta property="og:image" content="{{ asset('assets/img/og-image.jpg') }}">
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ $meta_title ?? 'Gagan Bharari Academy' }}">
   <meta name="twitter:description" content="{{ $meta_description ?? 'Best coaching academy in Pune.' }}">
   <meta name="twitter:image" content="{{ asset('assets/img/og-image.jpg') }}">
 
-  <!-- Google Site Verification -->
   <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" />
 
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-XXXXXXXXXX');
   </script>
-  <!-- End Google Analytics -->
 
-
-  <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -73,35 +63,21 @@
   }
   </script>
   
-  <!-- Preload Key Resources -->
   <link rel="preload" as="image" href="{{ asset('assets/img/favicon.jpeg') }}">
 
-  <!-- Favicons -->
   <link href="{{ asset('assets/img/favicon.jpeg') }}" rel="icon">
-  <!-- <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon"> -->
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
   <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
-  <!-- Main CSS File -->
   <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Mentor
-  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="index-page">
@@ -115,12 +91,8 @@
 
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li>
-          <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a>
-        </li>
-        <li>
-          <a href="{{ url('/about') }}" class="{{ request()->is('about') ? 'active' : '' }}">About Us</a>
-        </li>
+        <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
+        <li><a href="{{ url('/about') }}" class="{{ request()->is('about') ? 'active' : '' }}">About Us</a></li>
         
         <li class="dropdown">
           <a href="#" class="{{ request()->is('services') || request()->is('upcoming-batches') || request()->is('answer-keys') ? 'active' : '' }}">
@@ -133,25 +105,11 @@
           </ul>
         </li>
 
-        <li>
-          <a href="{{ url('/faculties') }}" class="{{ request()->is('faculties') ? 'active' : '' }}">Our Faculty</a>
-        </li>
-        
-        <li>
-          <a href="{{ url('/topper-students') }}" class="{{ request()->is('topper-students') ? 'active' : '' }}">Toppers</a>
-        </li>
-
-        <li>
-          <a href="{{ url('/gallery') }}" class="{{ request()->is('gallery') ? 'active' : '' }}">Gallery</a>
-        </li>
-
-        <li>
-          <a href="{{ url('/blogs') }}" class="{{ request()->is('blogs') ? 'active' : '' }}">Blog</a>
-        </li>
-
-        <li>
-          <a href="{{ url('/contact-us') }}" class="{{ request()->is('contact-us') ? 'active' : '' }}">Contact Us</a>
-        </li>
+        <li><a href="{{ url('/faculties') }}" class="{{ request()->is('faculties') ? 'active' : '' }}">Our Faculty</a></li>
+        <li><a href="{{ url('/topper-students') }}" class="{{ request()->is('topper-students') ? 'active' : '' }}">Toppers</a></li>
+        <li><a href="{{ url('/gallery') }}" class="{{ request()->is('gallery') ? 'active' : '' }}">Gallery</a></li>
+        <li><a href="{{ url('/blogs') }}" class="{{ request()->is('blogs') ? 'active' : '' }}">Blog</a></li>
+        <li><a href="{{ url('/contact-us') }}" class="{{ request()->is('contact-us') ? 'active' : '' }}">Contact Us</a></li>
       </ul>
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </nav>
