@@ -64,6 +64,7 @@ return array(
     'App\\Filament\\Resources\\UpcomingBatchResource\\Pages\\CreateUpcomingBatch' => $baseDir . '/app/Filament/Resources/UpcomingBatchResource/Pages/CreateUpcomingBatch.php',
     'App\\Filament\\Resources\\UpcomingBatchResource\\Pages\\EditUpcomingBatch' => $baseDir . '/app/Filament/Resources/UpcomingBatchResource/Pages/EditUpcomingBatch.php',
     'App\\Filament\\Resources\\UpcomingBatchResource\\Pages\\ListUpcomingBatches' => $baseDir . '/app/Filament/Resources/UpcomingBatchResource/Pages/ListUpcomingBatches.php',
+    'App\\Filament\\Widgets\\DashboardCharts' => $baseDir . '/app/Filament/Widgets/DashboardCharts.php',
     'App\\Filament\\Widgets\\DashboardOverview' => $baseDir . '/app/Filament/Widgets/DashboardOverview.php',
     'App\\Http\\Controllers\\AboutController' => $baseDir . '/app/Http/Controllers/AboutController.php',
     'App\\Http\\Controllers\\AnswerKeyController' => $baseDir . '/app/Http/Controllers/AnswerKeyController.php',
