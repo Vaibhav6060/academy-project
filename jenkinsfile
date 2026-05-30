@@ -43,14 +43,24 @@ pipeline {
 
         stage('Deploy To EKS') {
             steps {
-                // Using double quotes here so Jenkins replaces the variables accurately
-                sh """
-                kubectl set image deployment/laravel-app \\
-                laravel=${IMAGE_NAME}:${IMAGE_TAG} \\
-                -n academy
+                // Injects the AWS keys created under 'aws-creds' to authenticate with EKS
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'aws-creds',
+                        usernameVariable: 'AWS_ACCESS_KEY_ID',
+                        passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                    )
+                ]) {
+                    sh """
+                    export AWS_DEFAULT_REGION=eu-north-1
+                    
+                    kubectl set image deployment/laravel-app \\
+                    laravel=${IMAGE_NAME}:${IMAGE_TAG} \\
+                    -n academy
 
-                kubectl rollout status deployment/laravel-app -n academy
-                """
+                    kubectl rollout status deployment/laravel-app -n academy
+                    """
+                }
             }
         }
     }
