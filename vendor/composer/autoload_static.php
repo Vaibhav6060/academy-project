@@ -763,6 +763,7 @@ class ComposerStaticInit2815fe386e0d1f6a855f1c04c6ea7185
         'App\\Filament\\Resources\\UpcomingBatchResource\\Pages\\CreateUpcomingBatch' => __DIR__ . '/../..' . '/app/Filament/Resources/UpcomingBatchResource/Pages/CreateUpcomingBatch.php',
         'App\\Filament\\Resources\\UpcomingBatchResource\\Pages\\EditUpcomingBatch' => __DIR__ . '/../..' . '/app/Filament/Resources/UpcomingBatchResource/Pages/EditUpcomingBatch.php',
         'App\\Filament\\Resources\\UpcomingBatchResource\\Pages\\ListUpcomingBatches' => __DIR__ . '/../..' . '/app/Filament/Resources/UpcomingBatchResource/Pages/ListUpcomingBatches.php',
+        'App\\Filament\\Widgets\\DashboardOverview' => __DIR__ . '/../..' . '/app/Filament/Widgets/DashboardOverview.php',
         'App\\Http\\Controllers\\AboutController' => __DIR__ . '/../..' . '/app/Http/Controllers/AboutController.php',
         'App\\Http\\Controllers\\AnswerKeyController' => __DIR__ . '/../..' . '/app/Http/Controllers/AnswerKeyController.php',
         'App\\Http\\Controllers\\BlogsController' => __DIR__ . '/../..' . '/app/Http/Controllers/BlogsController.php',
