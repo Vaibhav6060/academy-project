@@ -1,119 +1,336 @@
-<!DOCTYPE html>
-<html lang="en">
+@include('includes.header')
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>{{ $meta_title ?? 'Gagan Bharari Academy' }}</title>
+<main class="main">
 
-  <meta name="description" content="{{ $meta_description ?? 'Best coaching academy in Pune.' }}">
-  <meta name="keywords" content="{{ $meta_keywords ?? 'coaching, academy, pune, rajgurunagar' }}">
-  <meta name="robots" content="index, follow">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="canonical" href="{{ $canonical_url ?? url()->current() }}">
+    @if(isset($hero) && $hero)
+    <section id="hero" class="hero section dark-background">
+      <img src="{{ asset('storage/' . $hero->image) }}" alt="Competitive Exam Coaching in Rajgurunagar - Police, Army, Talathi, MPSC" style="filter: blur(2px);" data-aos="fade-in">
+      <div class="container">
+        <h2 data-aos="fade-up" data-aos-delay="100">
+          {{ $hero->heading }}
+        </h2>
+        <p data-aos="fade-up" data-aos-delay="200" class="text-white">
+          {{ $hero->subheading }}
+        </p>
+        <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+          <a href="{{ $hero->button_url }}" class="btn-get-started" title="Explore Competitive Exam Courses">{{ $hero->button_text }}</a>
+        </div>
+      </div>
+    </section>
+    @endif
 
-  <meta property="og:title" content="{{ $meta_title ?? 'Gagan Bharari Academy' }}">
-  <meta property="og:description" content="{{ $meta_description ?? 'Best coaching academy in Pune.' }}">
-  <meta property="og:url" content="{{ $canonical_url ?? url()->current() }}">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="{{ asset('assets/img/og-image.jpg') }}">
+    @if(isset($batches) && $batches->isNotEmpty())
+      <section class="marquee-section py-2 text-white" style="background-color: #1C00B8;">
+        <div class="container">
+          <marquee behavior="scroll" direction="left" scrollamount="10" onmouseover="this.stop();" onmouseout="this.start();">
+            @foreach($batches as $batch)
+              <span class="me-5">
+                📣 <strong>{{ $batch->batch_name }}</strong> | 
+                Duration: {{ $batch->batch_duration }} | 
+                Launch Date: {{ \Carbon\Carbon::parse($batch->batch_launch_date)->format('d M Y') }} | 
+                Timing: {{ $batch->batch_timing }}
+              </span>
+            @endforeach
+          </marquee>
+        </div>
+      </section>
+    @endif
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ $meta_title ?? 'Gagan Bharari Academy' }}">
-  <meta name="twitter:description" content="{{ $meta_description ?? 'Best coaching academy in Pune.' }}">
-  <meta name="twitter:image" content="{{ asset('assets/img/og-image.jpg') }}">
+    <section id="about" class="about section">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
+            <img src="{{ asset('assets/img/about-3.jpg') }}" class="img-fluid" alt="Best Coaching for Police Bharti, Army, Talathi, MPSC in Rajgurunagar - Gagan Bharari Academy">
+          </div>
+          <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
+            <h3>Gagan Bharari Academy – Your Success Partner for Government Exam</h3>
+            <p class="fst-italic">
+                Trusted coaching institute in Rajgurunagar, Pune for competitive government exams preparation.
+            </p>
+            <ul>
+              <li><i class="bi bi-check-circle"></i> <span>Expert faculty for Police Bharti & Army Recruitment exams.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Comprehensive syllabus for Talathi Bharti & MPSC Foundation.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Daily practice sessions and doubt-solving classes.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Regular mock tests to enhance exam readiness.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Physical training sessions for Bharti-focused batches.</span></li>
+            </ul>
+            <a href="{{ url('/about') }}" class="read-more"><span>Explore More</span><i class="bi bi-arrow-right mt-1"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" />
+    <section id="counts" class="section counts light-background">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gy-4">
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="1232" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Students Enrolled</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="64" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Services Offered</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Successful Events</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="24" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Experienced Trainers</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
+    <section id="why-us" class="section why-us">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="why-box">
+              <h3>Why Choose Gagan Choose Academy?</h3>
+              <p>
+                At Gagan Bharari Academy, we offer an immersive learning experience with a focus on excellence, innovation, and personalized attention. Our dedicated team of educators ensures that each student receives quality guidance, empowering them to achieve their academic goals and succeed in competitive exams.
+              </p>
+              <div class="text-center">
+                <a href="{{ url('about') }}" class="more-btn"><span>Learn More</span> <i class="bi bi-chevron-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 d-flex align-items-stretch">
+            <div class="row gy-4" data-aos="fade-up" data-aos-delay="200">
+              <div class="col-xl-4">
+                <div class="icon-box d-flex flex-column justify-content-center align-items-center">
+                  <i class="bi bi-clipboard-data"></i>
+                  <h4>Expert Faculty</h4>
+                  <p>Our highly experienced and qualified faculty members provide in-depth knowledge and mentorship, ensuring that students are well-prepared for exams and their future careers.</p>
+                </div>
+              </div>
+              <div class="col-xl-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="icon-box d-flex flex-column justify-content-center align-items-center">
+                  <i class="bi bi-gem"></i>
+                  <h4>Comprehensive Curriculum</h4>
+                  <p>We offer a well-rounded curriculum that not only covers the core subjects but also focuses on developing critical thinking, problem-solving, and time management skills to excel in competitive exams.</p>
+                </div>
+              </div>
+              <div class="col-xl-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="icon-box d-flex flex-column justify-content-center align-items-center">
+                  <i class="bi bi-inboxes"></i>
+                  <h4>State-of-the-Art Facilities</h4>
+                  <p>Our academy is equipped with modern teaching aids, interactive classrooms, and online resources that enhance the learning experience and make studying enjoyable.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "Gagan Bharari Academy",
-    "alternateName": "GBA",
-    "url": "{{ url('/') }}",
-    "logo": "{{ asset('assets/img/logo.png') }}",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+91-9876543210",
-      "contactType": "Customer Service",
-      "areaServed": "IN",
-      "availableLanguage": ["English", "Marathi"]
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Main Road, Near Bus Stand",
-      "addressLocality": "Rajgurunagar",
-      "addressRegion": "Maharashtra",
-      "postalCode": "410505",
-      "addressCountry": "IN"
-    },
-    "sameAs": [
-      "https://www.facebook.com/gaganbharariacademy",
-      "https://www.instagram.com/gaganbharariacademy"
-    ]
-  }
-  </script>
-  
-  <link rel="preload" as="image" href="{{ asset('assets/img/favicon.jpeg') }}">
+    <section id="features" class="features section">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="features-item">
+              <i class="bi bi-eye" style="color: #ffbb2c;"></i>
+              <h3>Personalized Learning</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="features-item">
+              <i class="bi bi-infinity" style="color: #5578ff;"></i>
+              <h3>Unlimited Resources</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="features-item">
+              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+              <h3>Expert Faculty</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="features-item">
+              <i class="bi bi-nut" style="color: #e361ff;"></i>
+              <h3>Holistic Growth</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="500">
+            <div class="features-item">
+              <i class="bi bi-shuffle" style="color: #47aeff;"></i>
+              <h3>Flexible Timings</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="600">
+            <div class="features-item">
+              <i class="bi bi-star" style="color: #ffa76e;"></i>
+              <h3>Result-Oriented</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="700">
+            <div class="features-item">
+              <i class="bi bi-x-diamond" style="color: #11dbcf;"></i>
+              <h3>Modern Infrastructure</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="800">
+            <div class="features-item">
+              <i class="bi bi-camera-video" style="color: #4233ff;"></i>
+              <h3>Online Classes</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="900">
+            <div class="features-item">
+              <i class="bi bi-command" style="color: #b2904f;"></i>
+              <h3>Interactive Workshops</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="1000">
+            <div class="features-item">
+              <i class="bi bi-dribbble" style="color: #b20969;"></i>
+              <h3>Mock Tests</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="1100">
+            <div class="features-item">
+              <i class="bi bi-activity" style="color: #ff5828;"></i>
+              <h3>Peer Collaboration</h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="1200">
+            <div class="features-item">
+              <i class="bi bi-brightness-high" style="color: #29cc61;"></i>
+              <h3>Parent Engagement</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <link href="{{ asset('assets/img/favicon.jpeg') }}" rel="icon">
+    <section id="courses" class="courses section">
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Services</h2>
+            <p>Popular Services</p>
+        </div>
+        <div class="container">
+            <div class="row">
+                @if(isset($services))
+                  @foreach($services->take(3) as $service)
+                      <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-4" data-aos="zoom-in" data-aos-delay="{{ 100 * $loop->iteration }}">
+                          <div class="course-item d-flex flex-column h-100">
+                              <img src="{{ asset('storage/' . $service->image) }}" class="img-fluid" alt="{{ $service->title }}">
+                              <div class="course-content d-flex flex-column flex-grow-1">
+                                  <h3><a href="#">{{ $service->title }}</a></h3>
+                                  <p class="description">{{ $service->description }}</p>
+                                  <div class="trainer mt-auto d-flex justify-content-between align-items-center">
+                                      <button type="button" class="btn category enquiry-btn" data-service="{{ $service->title }}">Enquiry</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  @endforeach
+                @endif
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <a href="{{ url('/services') }}" class="btn btn-primary themecolorbutton">See All Services</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <section id="trainers-index" class="section trainers-index">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Faculties</h2>
+        <p>Our Faculties</p>
+      </div>
+      <div class="container">
+        <div class="row">
+          @if(isset($faculties))
+            @foreach($faculties->take(3) as $key => $faculty)
+              <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="{{ ($key + 1) * 100 }}">
+                <div class="member">
+                  <img src="{{ asset('storage/' . $faculty->faculty_image) }}" class="img-fluid" alt="{{ $faculty->faculty_name }}">
+                  <div class="member-content">
+                    <h4>{{ $faculty->faculty_name }}</h4>
+                    <span>{{ $faculty->faculty_experience }}</span>
+                    <p>{{ $faculty->faculty_description }}</p>
+                  </div>
+                </div>
+              </div>
+            @endforeach
+          @endif
+        </div>
+        <div class="row mt-4">
+          <div class="col-12 text-center">
+            <a href="{{ url('/faculties') }}" class="btn btn-primary themecolorbutton">See All Faculties</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <section id="testimonials" class="testimonials section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Testimonials</h2>
+        <p>What are they saying</p>
+      </div>
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "slidesPerView": "auto",
+              "pagination": {
+                "el": ".swiper-pagination",
+                "type": "bullets",
+                "clickable": true
+              },
+              "breakpoints": {
+                "320": { "slidesPerView": 1, "spaceBetween": 40 },
+                "1200": { "slidesPerView": 2, "spaceBetween": 20 }
+              }
+            }
+          </script>
+          <div class="swiper-wrapper">
+            @if(isset($testimonials))
+              @foreach($testimonials as $testimonial)
+              <div class="swiper-slide">
+                <div class="testimonial-wrap">
+                  <div class="testimonial-item">
+                    <img src="{{ asset('storage/' . $testimonial->photo) }}" class="testimonial-img" alt="{{ $testimonial->name }}">
+                    <h3>{{ $testimonial->name }}</h3>
+                    <h4>{{ $testimonial->designation ?? 'Student' }}</h4>
+                    <div class="stars">
+                      @for($i = 0; $i < 5; $i++)
+                        <i class="bi bi-star-fill"></i>
+                      @endfor
+                    </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span>{{ $testimonial->testimonial }}</span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              @endforeach
+            @endif
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
 
-  <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
-</head>
+</main>
 
-<body class="index-page">
-
-<header id="header" class="header d-flex align-items-center sticky-top">
-  <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
-    <a href="{{ url('/') }}" class="logo d-flex align-items-center me-auto">
-      <img src="{{ asset('assets/img/logo-old.jpeg') }}" alt="Gagan Bharari Academy Logo" class="img-fluid" loading="lazy">
-    </a>
-
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
-        <li><a href="{{ url('/about') }}" class="{{ request()->is('about') ? 'active' : '' }}">About Us</a></li>
-        
-        <li class="dropdown">
-          <a href="#" class="{{ request()->is('services') || request()->is('upcoming-batches') || request()->is('answer-keys') ? 'active' : '' }}">
-            Courses <i class="bi bi-chevron-down dropdown-indicator"></i>
-          </a>
-          <ul>
-            <li><a href="{{ url('/services') }}" class="{{ request()->is('services') ? 'active' : '' }}">Our Services</a></li>
-            <li><a href="{{ url('/upcoming-batches') }}" class="{{ request()->is('upcoming-batches') ? 'active' : '' }}">Upcoming Batches</a></li>
-            <li><a href="{{ url('/answer-keys') }}" class="{{ request()->is('answer-keys') ? 'active' : '' }}">Answer Keys</a></li>
-          </ul>
-        </li>
-
-        <li><a href="{{ url('/faculties') }}" class="{{ request()->is('faculties') ? 'active' : '' }}">Our Faculty</a></li>
-        <li><a href="{{ url('/topper-students') }}" class="{{ request()->is('topper-students') ? 'active' : '' }}">Toppers</a></li>
-        <li><a href="{{ url('/gallery') }}" class="{{ request()->is('gallery') ? 'active' : '' }}">Gallery</a></li>
-        <li><a href="{{ url('/blogs') }}" class="{{ request()->is('blogs') ? 'active' : '' }}">Blog</a></li>
-        <li><a href="{{ url('/contact-us') }}" class="{{ request()->is('contact-us') ? 'active' : '' }}">Contact Us</a></li>
-      </ul>
-      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-    </nav>
-
-    <a class="btn-getstarted" href="{{ url('/services') }}">Start Your Journey</a>
-  </div>
-</header>
+@include('includes.footer')
