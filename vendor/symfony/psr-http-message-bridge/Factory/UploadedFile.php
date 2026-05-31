@@ -23,9 +23,6 @@ class UploadedFile extends BaseUploadedFile
 {
     private bool $test = false;
 
-    /**
-     * @param-immediately-invoked-callable $getTemporaryPath
-     */
     public function __construct(
         private readonly UploadedFileInterface $psrUploadedFile,
         callable $getTemporaryPath,
