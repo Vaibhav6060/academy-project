@@ -3,33 +3,20 @@ kind: Deployment
 metadata:
   name: nginx
   namespace: academy
-
 spec:
   replicas: 2
-
   selector:
     matchLabels:
       app: nginx
-
   template:
     metadata:
       labels:
         app: nginx
-
     spec:
-      containers:
-      - name: nginx
-
-        image: nginx:latest
-
-        ports:
-        - containerPort: 80
-
-        volumeMounts:
-        - name: nginx-config
-          mountPath: /etc/nginx/conf.d
-
       volumes:
       - name: nginx-config
         configMap:
           name: nginx-config
+      # 1. Reference the same shared volume strategy (or hostPath/EFS if sharing across nodes)
+      # Note: For strict independent deployments across different nodes, combining 
+      # them into a single dual-container Pod (as shown below) is highly recommended.

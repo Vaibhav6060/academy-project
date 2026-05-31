@@ -43,7 +43,6 @@ pipeline {
 
         stage('Deploy To EKS') {
             steps {
-                // Injects the AWS keys created under 'aws-creds' to authenticate with EKS
                 withCredentials([
                     usernamePassword(
                         credentialsId: 'aws-creds',
@@ -54,11 +53,19 @@ pipeline {
                     sh """
                     export AWS_DEFAULT_REGION=eu-north-1
                     
-                    kubectl set image deployment/laravel-app \\
+                    # 1. Apply the new mixed deployment layout and Nginx web routing service
+                    kubectl apply -f academy-deployment.yaml -n academy
+                    kubectl apply -f nginx-service.yaml -n academy
+                    
+                    # 2. Upgrade the container images across the deployment stack simultaneously
+                    # This triggers both the initContainer and the app container to update
+                    kubectl set image deployment/academy-stack \\
                     laravel=${IMAGE_NAME}:${IMAGE_TAG} \\
+                    code-provider=${IMAGE_NAME}:${IMAGE_TAG} \\
                     -n academy
 
-                    kubectl rollout status deployment/laravel-app -n academy
+                    # 3. Track rollout until completely healthy and running
+                    kubectl rollout status deployment/academy-stack -n academy
                     """
                 }
             }
@@ -67,10 +74,29 @@ pipeline {
 
     post {
         success {
-            echo 'Deployment Successful'
+            withCredentials([
+                usernamePassword(
+                    credentialsId: 'aws-creds', 
+                    usernameVariable: 'AWS_ACCESS_KEY_ID', 
+                    passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                )
+            ]) {
+                sh """
+                export AWS_DEFAULT_REGION=eu-north-1
+                echo '========================================================================'
+                echo '🚀 DEPLOYMENT SUCCESSFUL!'
+                echo '🎯 Access your Laravel application in the browser using this URL:'
+                echo ''
+                
+                # Dynamic fetch of the live AWS Load Balancer DNS target
+                kubectl get svc nginx-service -n academy -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+                
+                echo '\n========================================================================'
+                """
+            }
         }
         failure {
-            echo 'Deployment Failed'
+            echo '❌ Deployment Failed'
         }
     }
 }

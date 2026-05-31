@@ -1,39 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: laravel-app
+  name: academy-stack
   namespace: academy
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: laravel-app
+      app: academy-web
   template:
     metadata:
       labels:
-        app: laravel-app
+        app: academy-web
     spec:
       imagePullSecrets:
       - name: dockerhub-secret
       
-      # 1. Declare a shared volume that lives as long as the pod lives
       volumes:
-      - name: app-volume
-        emptyDir: {}
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+      - name: shared-files
+        emptyDir: {} # Creates a shared storage volume between both containers
 
-      # 2. This runs BEFORE your main app container starts
+      # This copies your Laravel build files into the shared storage volume before starting
       initContainers:
-      - name: install-assets
+      - name: code-provider
         image: vaibhav6060/academy:latest
         imagePullPolicy: Always
-        command: ["cp", "-a", "/var/www/html/.", "/shared-w"]
+        command: ["cp", "-a", "/var/www/html/.", "/var/www/shared"]
         volumeMounts:
-        - name: app-volume
-          mountPath: /shared-w
+        - name: shared-files
+          mountPath: /var/www/shared
 
       containers:
+      # --- Container 1: PHP-FPM (Laravel Application) ---
       - name: laravel
         image: vaibhav6060/academy:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 9000
         env:
@@ -45,7 +49,17 @@ spec:
           valueFrom: { secretKeyRef: { name: academy-db-secret, key: DB_USERNAME } }
         - name: DB_PASSWORD
           valueFrom: { secretKeyRef: { name: academy-db-secret, key: DB_PASSWORD } }
-        # 3. Mount the shared volume here as well
         volumeMounts:
-        - name: app-volume
+        - name: shared-files
+          mountPath: /var/www/html
+
+      # --- Container 2: Nginx Web Server ---
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d
+        - name: shared-files
           mountPath: /var/www/html

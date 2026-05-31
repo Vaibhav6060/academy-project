@@ -1,16 +1,12 @@
 apiVersion: v1
 kind: Service
-
 metadata:
   name: nginx-service
   namespace: academy
-
 spec:
   type: LoadBalancer
-
   selector:
-    app: nginx
-
+    app: academy-web  # <-- Change this to point to the mixed pod deployment
   ports:
   - port: 80
     targetPort: 80
