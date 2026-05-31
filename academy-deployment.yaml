@@ -41,6 +41,10 @@ spec:
         ports:
         - containerPort: 9000
         env:
+        - name: DB_CONNECTION
+          value: "mysql"            # <--- Explicitly forces Laravel away from SQLite fallback
+        - name: CACHE_STORE
+          value: "database"         # <--- Forces the cache mechanism to use MySQL
         - name: DB_HOST
           valueFrom: { secretKeyRef: { name: academy-db-secret, key: DB_HOST } }
         - name: DB_DATABASE
